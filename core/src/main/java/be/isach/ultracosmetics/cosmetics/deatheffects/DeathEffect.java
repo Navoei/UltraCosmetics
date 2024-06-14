@@ -5,6 +5,7 @@ import be.isach.ultracosmetics.cosmetics.Cosmetic;
 import be.isach.ultracosmetics.cosmetics.type.DeathEffectType;
 import be.isach.ultracosmetics.player.UltraPlayer;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -21,12 +22,12 @@ public abstract class DeathEffect extends Cosmetic<DeathEffectType> {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        if (event.getEntity() == getPlayer()) {
-            displayParticles(event.getEntity());
+        if (event.getEntity().getKiller() == getPlayer().getKiller()) {
+            displayParticles(event.getEntity().getKiller(), event.getEntity().getLocation());
         }
     }
 
-    public void displayParticles(Player player) {
-        getType().getEffect().display(player.getLocation());
+    public void displayParticles(Player killer, Location deadPlayerLocation) {
+        getType().getEffect().display(deadPlayerLocation);
     }
 }

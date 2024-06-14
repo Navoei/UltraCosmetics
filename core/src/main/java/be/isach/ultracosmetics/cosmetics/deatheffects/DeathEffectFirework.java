@@ -5,11 +5,8 @@ import be.isach.ultracosmetics.UltraCosmeticsData;
 import be.isach.ultracosmetics.cosmetics.type.DeathEffectType;
 import be.isach.ultracosmetics.player.UltraPlayer;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
+import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
-import org.bukkit.Material;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -26,8 +23,8 @@ public class DeathEffectFirework extends DeathEffect {
     }
 
     @Override
-    public void displayParticles(Player player) {
-        Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
+    public void displayParticles(Player killer, Location deadPlayerLocation) {
+        Firework firework = killer.getWorld().spawn(deadPlayerLocation, Firework.class);
         firework.setFireworkMeta(meta);
         firework.setMetadata("uc_firework", new FixedMetadataValue(UltraCosmeticsData.get().getPlugin(), true));
         Bukkit.getScheduler().runTaskLater(getUltraCosmetics(), firework::detonate, 5);
